@@ -1,0 +1,58 @@
+.chatInputContainer {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: fixed;
+  bottom: 24px;
+  left: 400px; /* left-64 */
+  right: 50px;
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  outline: none;
+  color: white;
+  border: none;
+  font-size: 1rem;
+}
+
+.modelSelect {
+  background-color: #1f1f1f;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.searchButton {
+  background-color: #3a2e3e;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.searchButton:hover {
+  background-color: #4c3b50;
+}
+
+.attachButton {
+  background-color: #3a2e3e;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.attachButton:hover {
+  background-color: #4c3b50;
+}
