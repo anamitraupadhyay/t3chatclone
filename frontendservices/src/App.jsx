@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import WelcomeScreen from './components/Welcomescreen';
@@ -7,6 +8,7 @@ import Login from './components/Login';
 import './App.css';
 
 function ChatLayout() {
+  const [responseText, setResponseText] = useState("");
   return (
     <div
       className="flex h-screen bg-[#1e1e2f] text-white sidebar-msg"
@@ -14,8 +16,8 @@ function ChatLayout() {
     >
       <Sidebar />
       <div className="flex flex-col flex-1">
-        <WelcomeScreen />
-        <ChatInput />
+        <WelcomeScreen response={responseText}/>
+        <ChatInput setResponse={setResponseText}/>
       </div>
     </div>
   );
