@@ -6,14 +6,13 @@ const ChatInput = ({ setResponse }) => {
   const [inputValue, setInputValue] = React.useState('');
   //const [answer, setAnswer] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-
   async function generateAnswer(e) {
   e.preventDefault(); // prevent form from refreshing
-
+  const apiKey = import.meta.env.VITE_API_KEY;
   setLoading(true);
   try {
     const response = await axios.post(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyD7MDfcTbZ5ta-6ylirYI7rKJuhiuiwsBw",
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
     "contents": [
       {
@@ -31,10 +30,10 @@ const ChatInput = ({ setResponse }) => {
         },
       }
     );
-    console.log("✅ Gemini Response:", response.data);
+    //console.log(" Gemini Response:", response.data);
     setResponse(response.data.candidates[0].content.parts[0].text);
   } catch (error) {
-    console.error("❌ Gemini API Error:", error.response?.data || error.message);
+    console.error(" Gemini API Error:", error.response?.data || error.message);
   }finally{
     setLoading(false);
   }
