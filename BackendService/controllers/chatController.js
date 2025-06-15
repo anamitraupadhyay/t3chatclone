@@ -1,13 +1,14 @@
 const Chat = require('../models/Chat');
-const { v4: uuidv4 } = require('uuid'); // Add uuid for generating conversationId
+const { v4: uuidv4 } = require('uuid');
 
 // Start a new conversation or add a message to an existing one
 exports.addMessage = async (req, res) => {
   try {
-    const { userId, question, response, conversationId } = req.body;
+    const userId = req.auth.userId; // Always use Clerk userId
+    const { question, response, conversationId } = req.body;
 
-    if (!userId || !question || !response) {
-      return res.status(400).json({ error: 'userId, question, and response are required' });
+    if (!question || !response) {
+      return res.status(400).json({ error: 'question and response are required' });
     }
 
     if (conversationId) {
@@ -37,10 +38,10 @@ exports.addMessage = async (req, res) => {
   }
 };
 
-// Get all conversations for a user which is used for History bar
+// Get all conversations for the authenticated user
 exports.getUserConversations = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = req.auth.userId;
     const chats = await Chat.find({ userId }).sort({ updatedAt: -1 });
     res.json(chats);
   } catch (error) {
@@ -48,10 +49,11 @@ exports.getUserConversations = async (req, res) => {
   }
 };
 
-// Get a specific conversation by conversationId to access the past conversations
+// Get a specific conversation by conversationId for the authenticated user
 exports.getConversation = async (req, res) => {
   try {
-    const { userId, conversationId } = req.params;
+    const userId = req.auth.userId;
+    const { conversationId } = req.params;
     const chat = await Chat.findOne({ userId, conversationId });
     if (!chat) {
       return res.status(404).json({ error: 'Conversation not found' });
@@ -62,10 +64,11 @@ exports.getConversation = async (req, res) => {
   }
 };
 
-// Delete a specific conversation by conversationId
+// Delete a specific conversation by conversationId for the authenticated user
 exports.deleteConversation = async (req, res) => {
   try {
-    const { userId, conversationId } = req.params;
+    const userId = req.auth.userId;
+    const { conversationId } = req.params;
     const chat = await Chat.findOneAndDelete({ userId, conversationId });
     if (!chat) {
       return res.status(404).json({ error: 'Conversation not found or not owned by user' });
