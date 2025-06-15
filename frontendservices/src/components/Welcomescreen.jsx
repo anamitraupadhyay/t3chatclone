@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Welcomescreen.module.css';
+import { TypeAnimation } from 'react-type-animation';
 
 const WelcomeScreen = ({ response }) => {
   function formatText(text) {
@@ -7,11 +8,10 @@ const WelcomeScreen = ({ response }) => {
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // bold
     .replace(/__(.*?)__/g, "<u>$1</u>"); // underline (optional if you use __text__)
 }
-
   return (
     <div className={styles.welcomeContainer}>
       {response
-        ? <div className="answer-container" style={{backgroundColor:'none', padding:'20px', borderRadius:'10px',marginRight:'60px'}}>
+        ? <div className="answer-container" style={{backgroundColor:'#1a0e18', padding:'20px', borderRadius:'10px',marginRight:'60px'}}>
          <div
           className="answer-container"
           style={{
@@ -22,15 +22,22 @@ const WelcomeScreen = ({ response }) => {
         >
       <h2 className={styles.heading}>Answer</h2>
       <ul style={{ paddingLeft: "20px", lineHeight: "1.6", color: "white" }}>
-      {response
-      ?.split("\n")
-      .filter(line => line.trim() !== "")
-      .map((line, index) => (
-          <li key={index} dangerouslySetInnerHTML={{ __html: formatText(line) }}></li>
-
-      ))}
-  </ul>
-</div>
+      {
+        response
+  ?.split("\n")
+  .filter(line => line.trim() !== "")
+  .map((line, index) => (
+    <div key={index} style={{ textAlign: "left", marginBottom: "10px" }}>
+      <TypeAnimation
+        sequence={[line.replace(/\*\*(.*?)\*\*/g, "$1")]} // remove bold markdown
+        speed={50}
+        wrapper="span"
+        cursor={false}
+      />
+    </div>
+  ))}
+      </ul>
+    </div>
 
         </div>
       :(

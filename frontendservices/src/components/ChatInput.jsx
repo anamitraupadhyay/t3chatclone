@@ -14,16 +14,16 @@ const ChatInput = ({ setResponse }) => {
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
-    "contents": [
-      {
-        "parts": [
-          {
-            "text": inputValue
-          }
-        ]
-      }
-    ]
-},
+        "contents": [
+        {
+            "parts": [
+            {
+              "text": inputValue
+            }
+          ]
+        }
+      ]
+     },
       {
         headers: {
           "Content-Type": "application/json",
